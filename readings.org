@@ -1,0 +1,20 @@
+ #+title: Readings
+ #+bibliography: ../bibliography/master.bib
+
+* Continuations
+
+- [cite:@Barker2022]
+- [cite:@Barker2002]
+- [cite:@BarkerShan2014]
+  
+* Applicatives
+
+- [cite:@Charlow2019]
+- [cite:@Charlow2022]
+  
+* Monads
+
+- [cite:@Grove2019a]
+- [cite:@Grove2019]
+- [cite:@Charlow2014]
+
