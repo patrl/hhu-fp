@@ -1,0 +1,134 @@
+#+title: Prolegomenon to continuations
+#+subtitle: Handout 1
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Reading
+
+- Chapter 1 of [cite:@BarkerShan2014].
+  * If you have any questions, please feel free to send me them in advance of next week's class.
+- Additional background: [cite:@Barker2002]
+  
+* Background
+
+"Computational linguistics" is often taken to be a synonym for /NLP/, i.e., teaching computers how to understand and produce natural language.
+
+Although this is a worthy enterprise, this is (arguably) of little direct relevance to theoretical linguistics.
+
+In theoretical linguistics, we're interested in answering the question: /what do we know, when we know a language?/
+
+In the context of formal semantics, this amounts to characterizing knowledge of /the conditions under which a sentence is true/.
+
+In this class, we'll be doing "computational linguistics" in a different sense - we'll be applying insights from computer science (more narrowly, programming language theory) to linguistic phenomena.
+
+Concretely, we'll apply techniques from the /functional programming/ paradigm to phenomena in natural language semantics.
+
+In compositional semantics, it is common to use the /Simply Typed Lambda Calculus/ (STLC) in order to model composition [cite:@Carpenter1998]; see the technical primer.
+
+** Continuations (why bother?)
+
+In the first block of this seminar, we're going to be investigating mechanisms via which meanings "get high".
+
+To put this in a different way, expressions of natural language come
+with conventionalized meaning components. Often, meaning components
+end up interpreted in places that don't necessarily correspond to the
+pronounced position of the expression they're associated with.
+
+Special cases of this include:
+
+- Scope-taking (our focus for the first part of the seminar).
+- Presupposition projection.
+- Projective non-at-issue content (expressives, supplements, etc.).
+  
+We have fairly well-established techniques for dealing with these phenomena, e.g., quantifier raising for scope-taking [cite:@May1977;@HeimKratzer1998].
+
+Continuations provide a powerful abstraction for modeling meaning components getting high in a more general, uniform way.
+
+This doesn't automatically make them preferable, but if we can get
+away with reducing our set of theoretical primitives while maintaining
+the same empirical coverage, we should at least pursue the
+possibility.
+
+Continuations were originally developed/discovered by computer scientists in order to account for computations that are delayed until later on (see, e.g., [cite:@DanvyFilinski1992;@Wadler1994]). As such, they're especially well-suited to modelling meaning components whose evaluation is delayed.
+
+We'll begin by following [cite:@BarkerShan2014], who develop an account of scope-taking in terms of continuations.
+
+One of the /design features/ of continuation semantics that will be of special interest to us is that it has a built in /left-to-right/ bias. In other words, the /surface scope/ reading of ([[ex3]]) involves a simpler computation than the inverse scope reading.
+
+In other words:
+
+#+name: ex3
+#+begin_exe
+\ex Exactly three philosophers have won every prize.
+#+end_exe
+
+A related phenomenon that we'll discuss, is that the interaction between scope and anaphora exhibits a /leftness bias/.
+
+#+name: crossover
+#+begin_exe
+\ex Every student\(^1\)'s mother adores their\(_1\) best friend.
+\ex \*Their\(_1\) best friend adores every student\(^1\)'s mother.
+#+end_exe
+
+The contrast above is an example of a /weak crossover/ violation [cite:@Postal1971].
+
+Roughly, weak crossover can be stated as follows: scope may feed binding /unless/ the bound expressions precedes the scope-taker.
+
+Continuation semantics has a fairly unique account of the contrast in ([[crossover]]), which we'll learn about in a couple of weeks time.
+
+** The plan
+
+We're going to start by developing an understanding of the /tower notation/ introduced by [cite:@BarkerShan2014], and its relationship with expressions of the STLC.
+
+We'll get a handle on continuation semantics' built-in linear bias, encoded in the composition principles themselves.
+
+We'll show how to account for scopal ambiguities via a combination of /lowering/ and multi-story towers.
+
+We'll also introduce the idea that /scope islands/ can be analyzed in terms of obligatory evaluation.
+
+* From Montague lift to continuation semantics
+
+Continuation semantics is in a certain sense /already implicit/ in the inventory of type-shifters standardly assumed in formal semantics [cite:@Partee1986].
+
+#+name: lift
+#+begin_exe
+\ex \(\mathbf{LIFT} = \lambda x\,.\,\lambda k\,.\,k(x)\)\hfill\(E \to (E \to T) \to T\)
+#+end_exe
+
+#+name: ident
+#+begin_exe
+\ex \(\mathbf{IDENT} = \lambda x\,.\,\lambda y\,.\,y = x\)\hfill\(E \to E \to T\)
+#+end_exe
+
+#+name: be
+#+begin_exe
+\ex \(\mathbf{BE} = \lambda Q\,.\,\lambda x\,.\,Q(\lambda y\,.\,y = x)\)\hfill \(((E \to T) \to T) \to E \to T\)
+#+end_exe
+
+Evidence for IDENT:
+
+#+name: ident-evidence
+#+begin_exe
+\ex This man is John.
+#+end_exe
+
+Evidence for BE:
+
+#+name: be-ev
+#+begin_exe
+\ex This man is an authority on heavy metal.
+#+end_exe
+
+Evidence for \(\mathbf{LIFT}\): quantification and non-quantificational DPs can be coordinated:
+
+#+name: howie
+#+begin_exe
+\ex Howie and a woman entered the club.
+#+end_exe
+
+
+
+#+print_bibliography:
