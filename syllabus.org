@@ -1,0 +1,101 @@
+#+title: Continuations and friends
+#+subtitle: What linguistics can learn from functional programming languages
+#+author: Patrick D. Elliott
+#+bibliography: ../bibliography/master.bib
+#+LaTeX_CLASS: scrartcl
+#+LaTeX_CLASS_OPTIONS: [letterpaper,parskip=half]
+#+LaTeX_HEADER: \input{handouts/boilerplate}
+#+LaTeX_COMPILER: pdflatex
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Class description
+
+Richard Montague famously made the following conjecture [cite:@Montague1970]:
+
+#+begin_quote
+"There is in my opinion no important theoretical difference between natural languages and the artificial languages of logicians."
+#+end_quote
+
+In this course we'll be considering a natural extension of Montague's thinking, as we explore parallels between natural languages and /the artificial languages of computer programmers/. The main focus will be on techniques developed by functional programmers for programming languages grounded in the lambda calculus, and their utility for analyzing phenomena in natural language semantics. Topics covered will include continuations and scope-taking, monads and exceptional scope, as well as applicative functors and enriched semantic composition.
+
+* Prerequisites
+
+- At least one introductory class in compositional semantics, with
+  similar coverage to /Semantics in Generative Grammar/
+  [cite:@HeimKratzer1998].
+- At least one class covering basic formal methods, i.e., logic (up to first order), and set theory.
+
+ This is by no means essential, but please let me know if you have some experience in a functional programming language, such as ~Haskell~, ~OCaml~, or some variety of ~Lisp/Scheme~. 
+
+* Contact information
+
+- Instructor: Patrick Elliott ([[https://patrickdelliott.com]])
+- Email: ~patrick.d.elliott@gmail.com~
+- Secretary: Tim Marton: ~tim.marton@phil.hhu.de~
+- For any questions, please use the rocket chat channel. You should have received an invitation.
+- For office hours, please don't hesitate to email me to schedule an ad-hoc meeting.
+
+* Online and offline info  
+
+- Meetings will take place in person, in ~23.21.U1.72~.
+- If circumstances (illness, Deutsche Bahn...) demand that the class go remote, I'll send out a zoom/webex link via rocket chat.
+- Tuesdays, 10:30-12:00.
+
+* TODO Schedule
+
+Total of 14 sessions:
+
+| date           | topic                         |
+|----------------+-------------------------------|
+| Tue Oct 11     | Preliminaries + continuations |
+| Tue Oct 18     |                               |
+| Tue Oct 25     |                               |
+| Tue Nov 1      | *no class (all saints)*       |
+| Tue Nov 8      |                               |
+| Tue Nov 15     |                               |
+| Tue Nov 22     |                               |
+| Tue Nov 29     |                               |
+| Tue Dec 6      |                               |
+| Tue Dec 13     |                               |
+| Tue Dec 20     |                               |
+|----------------+-------------------------------|
+| *winter break* |                               |
+|----------------+-------------------------------|
+| Tue jan 10     |                               |
+| Tue jan 17     |                               |
+| Tue Jan 24     |                               |
+| Tue Jan 31     |                               |
+
+* Assessment
+
+** Beteiligungsnachweis
+
+- Regular active participation.
+- Do the readings.
+  
+** Requirements for Abschlussprüfung
+
+- One class presentation (this can be either a reading group style presentation of a paper, or a group discussion of your squib topic).
+- A squib (i.e., short research paper, max 12 pages, prefereably 5-10).
+  * At least one meeting with me to discuss your squib topic.
+  
+The etymology of "squib", according to Haj Ross:[fn:1] 
+
+#+begin_quote
+WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility.
+
+At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is
+
+1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse.
+
+Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI.
+#+end_quote
+
+* Readings
+
+#+print_bibliography:
+
+* Footnotes
+
+[fn:1] https://www.ucl.ac.uk/pals/linguistic-inquiry-squibs-discussion
