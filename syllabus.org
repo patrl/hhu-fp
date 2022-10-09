@@ -46,26 +46,26 @@ In this course we'll be considering a natural extension of Montague's thinking, 
 
 Total of 14 sessions:
 
-| date           | topic                         |
-|----------------+-------------------------------|
-| Tue Oct 11     | Preliminaries + continuations |
-| Tue Oct 18     |                               |
-| Tue Oct 25     |                               |
-| Tue Nov 1      | *no class (all saints)*       |
-| Tue Nov 8      |                               |
-| Tue Nov 15     |                               |
-| Tue Nov 22     |                               |
-| Tue Nov 29     |                               |
-| Tue Dec 6      |                               |
-| Tue Dec 13     |                               |
-| Tue Dec 20     |                               |
-|----------------+-------------------------------|
-| *winter break* |                               |
-|----------------+-------------------------------|
-| Tue jan 10     |                               |
-| Tue jan 17     |                               |
-| Tue Jan 24     |                               |
-| Tue Jan 31     |                               |
+| date           | topic                                        |
+|----------------+----------------------------------------------|
+| Tue Oct 11     | Preliminaries + basic continuation semantics |
+| Tue Oct 18     | Continuations cont.                          |
+| Tue Oct 25     | Split-scope and flexible coordination        |
+| Tue Nov 1      | *no class (all saints)*                      |
+| Tue Nov 8      | Crossover phenomena                          |
+| Tue Nov 15     | Environment sensitivity: anaphora            |
+| Tue Nov 22     | Anaphora cont.                               |
+| Tue Nov 29     | Environment sensitvity: opacity              |
+| Tue Dec 6      | Opacity cont.                                |
+| Tue Dec 13     | Expressives and supplements                  |
+| Tue Dec 20     | Expressives cont.                            |
+|----------------+----------------------------------------------|
+| *winter break* |                                              |
+|----------------+----------------------------------------------|
+| Tue jan 10     | TBC                                          |
+| Tue jan 17     | Student presentations                        |
+| Tue Jan 24     | Student presentations                        |
+| Tue Jan 31     | Student presentations                        |
 
 * Assessment
 
