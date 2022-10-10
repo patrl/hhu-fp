@@ -1,13 +1,19 @@
-#+title: Continuations and friends
-#+subtitle: What linguistics can learn from functional programming languages
+#+title: Continuations and friends: what linguists can learn from programming language theorists 
+#+subtitle: Syllabus - HHU Seminar, WS 2022-23
 #+author: Patrick D. Elliott
 #+bibliography: ../bibliography/master.bib
 #+LaTeX_CLASS: scrartcl
 #+LaTeX_CLASS_OPTIONS: [letterpaper,parskip=half]
 #+LaTeX_HEADER: \input{handouts/boilerplate}
 #+LaTeX_COMPILER: pdflatex
-#+OPTIONS: ':t
+#+OPTIONS: ':t toc:nil
 #+cite_export: biblatex
+
+* Materials
+
+You can find the syllabus, handouts and and a subset of the readings at the following github repository. This will be updated on a regular basis.
+
+- [[https://github.com/patrl/hhu-fp]]
 
 * Class description
 
@@ -26,14 +32,12 @@ In this course we'll be considering a natural extension of Montague's thinking, 
   [cite:@HeimKratzer1998].
 - At least one class covering basic formal methods, i.e., logic (up to first order), and set theory.
 
- This is by no means essential, but please let me know if you have some experience in a functional programming language, such as ~Haskell~, ~OCaml~, or some variety of ~Lisp/Scheme~. 
-
 * Contact information
 
 - Instructor: Patrick Elliott ([[https://patrickdelliott.com]])
 - Email: ~patrick.d.elliott@gmail.com~
 - Secretary: Tim Marton: ~tim.marton@phil.hhu.de~
-- For any questions, please use the rocket chat channel. You should have received an invitation.
+- For any content questions, please use the rocket chat channel. You should have received an invitation, but email me for one if not.
 - For office hours, please don't hesitate to email me to schedule an ad-hoc meeting.
 
 * Online and offline info  
@@ -42,30 +46,30 @@ In this course we'll be considering a natural extension of Montague's thinking, 
 - If circumstances (illness, Deutsche Bahn...) demand that the class go remote, I'll send out a zoom/webex link via rocket chat.
 - Tuesdays, 10:30-12:00.
 
-* TODO Schedule
+* Schedule
 
 Total of 14 sessions:
 
-| date           | topic                                        |
-|----------------+----------------------------------------------|
-| Tue Oct 11     | Preliminaries + basic continuation semantics |
-| Tue Oct 18     | Continuations cont.                          |
-| Tue Oct 25     | Split-scope and flexible coordination        |
-| Tue Nov 1      | *no class (all saints)*                      |
-| Tue Nov 8      | Crossover phenomena                          |
-| Tue Nov 15     | Environment sensitivity: anaphora            |
-| Tue Nov 22     | Anaphora cont.                               |
-| Tue Nov 29     | Environment sensitvity: opacity              |
-| Tue Dec 6      | Opacity cont.                                |
-| Tue Dec 13     | Expressives and supplements                  |
-| Tue Dec 20     | Expressives cont.                            |
-|----------------+----------------------------------------------|
-| *winter break* |                                              |
-|----------------+----------------------------------------------|
-| Tue jan 10     | TBC                                          |
-| Tue jan 17     | Student presentations                        |
-| Tue Jan 24     | Student presentations                        |
-| Tue Jan 31     | Student presentations                        |
+| date           | topic                                 |
+|----------------+---------------------------------------|
+| Tue Oct 11     | Preliminaries + technical primer      |
+| Tue Oct 18     | Basic continuation semantics          |
+| Tue Oct 25     | Continuations continued               |
+| Tue Nov 1      | *no class (all saints)*               |
+| Tue Nov 8      | Split-scope and flexible coordination |
+| Tue Nov 15     | Crossover phenomena                   |
+| Tue Nov 22     | Environment sensitivity: anaphora     |
+| Tue Nov 29     | Environment sensitivity: anaphora ii  |
+| Tue Dec 6      | Environment sensitivity: opacity      |
+| Tue Dec 13     | Environment sensitivity: opacity ii   |
+| Tue Dec 20     | Expressives and supplements           |
+|----------------+---------------------------------------|
+| *winter break* |                                       |
+|----------------+---------------------------------------|
+| Tue jan 10     | TBC                                   |
+| Tue jan 17     | Student presentations                 |
+| Tue Jan 24     | Student presentations                 |
+| Tue Jan 31     | Student presentations                 |
 
 * Assessment
 
@@ -83,16 +87,33 @@ Total of 14 sessions:
 The etymology of "squib", according to Haj Ross:[fn:1] 
 
 #+begin_quote
-WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility.
+"WRT the word: I no longer know – my memory is too foggy over the 48 ± years since I started collecting them. I got to MIT in January of 1964; George Lakoff was an assistant professor at Harvard; we both were research assistants in Susumu Kuno’s lab, and we squibbed well and truly on a daily basis. I have asked George whether he knows who came up with the term or not; he says he is positive: I was the one. Could be – I certainly can’t deny responsibility."
 
-At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is
+"At some point I went looking in the OED to see if it contained a meaning like “short note” or anything like that. My wretched memory tells me that yes, there was such a meaning among the many that the OED offered up, but when I went this morning to look again for it for you, not a bit of it. There is one basic meaning, which has to do with with some kind of firework. But one of the citations is"
 
-1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse.
+"1599 Master Broughtons Lett. 47 Your bookes [are] but squibs, compounds of gunpowder and pisse."
 
-Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI.
+"Which I think would be an excellent sentence to have at the beginning of every squib section in each issue of LI."
 #+end_quote
 
 * Readings
+
+** Continuations
+
+- Primary text: [cite:@BarkerShan2014]
+- [cite:@Barker2002]
+  
+** Environment sensitivity
+
+- [cite:@Charlow2019]
+- [cite:@Elliotttoappear]
+- [cite:@AsudehGiorgolo2016]
+  
+** Expressives and supplements
+
+- [cite:@GiorgoloAsudeh2012]
+- [cite:@Gutzmann2019a]
+- [cite:@AsudehGiorgolo2020]
 
 #+print_bibliography:
 
