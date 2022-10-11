@@ -1,0 +1,8 @@
+#+title: Continuations and friends: what linguists can learn from programming language theorists
+#+author: Patrick D. Elliott
+
+Here you'll find the course material for the HHU WS 2022-2023 seminar "Continuations and friends: what linguists can learn from programming language theorists".
+
+- You can find the syllabus [[file:syllabus.pdf]]
+- for the handouts, look in the [[file:handouts/][handouts directory]] (you want to ~.pdf~ files). 
+- A proper subset of the readings can be found in the [[file:readings/][readings directory]].
