@@ -8,7 +8,10 @@
 
 * Reading
 
-- Chapter 6 of /Invitation to Formal Semantics/, especially the sections on quantifiers.
+- /Invitation to Formal Semantics/
+  * chapter 6.3-6.4
+  * Chapter 7.4.1
+  * Come to class next week with at least one question prepared about the reading.
   
 * Quantifiers: the basics
 
@@ -200,6 +203,40 @@ Determiners characterize curried /relations/ between sets, we call such relation
 \ex \(\eval*{\mathbf{every}} = \set{(R,P)|R \subseteq P}\)
 \ex \(\eval*{\mathbf{some}} = \set{(R,P)|R \cap P \neq \emptyset }\)
 #+end_exe
+
+* Quantifiers in object position
+
+How do we account for the following sentence compositionally?
+
+#+name: qr
+#+begin_exe
+\ex Bjorn loves everybody.
+#+end_exe
+
+Is the resulting translation well-typed?
+
+The solution: /quantifier raising/.
+
+Translating a sentence with quantifier raising involves creating a /functional abstraction/ with a variable that matches the trace of movement.
+
+#+begin_export latex
+\begin{center}
+\begin{forest}
+  [{\(T\)}
+  [{\((E \to T) \to T\)\\Everybody}]
+  [{\(E \to T\)}
+    [{\(\lambda x\)}]
+    [{\(T\)}
+    [{Susan: \(E\)}]
+    [{\(E \to T\)}
+      [{loves: \(E \to E \to T\)}]
+      [\(x\)\\{\(t_{x}\)}]
+    ]
+  ]
+  ]]
+\end{forest}
+\end{center}
+#+end_export
 
 #+print_bibliography:
 
