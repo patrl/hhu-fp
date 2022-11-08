@@ -1,0 +1,206 @@
+#+title: Quantification
+#+subtitle: Handout 2
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Reading
+
+- Chapter 6 of /Invitation to Formal Semantics/, especially the sections on quantifiers.
+  
+* Quantifiers: the basics
+
+We'd translate the following sentence into predicate logic as \(\forall x,\mathbf{smiled}(x)\)
+
+#+name: everybody
+#+begin_exe
+\ex Everybody smiled.
+#+end_exe
+
+What, exactly, is the contribution of /everybody/? Informally, it looks like some kind of template:
+
+#+name: template
+#+begin_exe
+\ex \(\forall x\,.\,\_ (x)\)
+#+end_exe
+
+The predicate *smiled* fills in the slot.
+
+We'll implement this idea in the lambda calculus by using a functional abstraction:
+
+#+name: everybody
+#+begin_exe
+\ex \(\mathbf{everybody} := \lambda P\,.\,\forall x\,.\,P(x)\)
+#+end_exe
+
+That means that the type of /everybody/ is \((E \to T) \to T)\), i.e., a function from predicates to truth-values.
+
+This is the type of a *quantifier*; as we'll see later on, this can also be the type of NPs more generally!
+
+We can define the other quantifiers from predicate logic in a similar way:
+
+#+name: something
+#+begin_exe
+\ex \(\mathbf{something} := \lambda P\,.\,\exists x\,.\,P(x)\)
+\ex \(\mathbf{nothing} := \lambda P\,.\,\neg\exists x\,.\,P(x)\)
+#+end_exe
+
+* The type of quanificational NPs
+
+Quantificational NPs in general seem to pattern with type \(E\) expressions, in terms of their distribution.
+
+#+name: singer
+#+begin_exe
+\ex A singer loves Frida.
+\ex Frida loves a singer.
+#+end_exe
+
+See also: /someone/, /everybody/, /nobody/, /some lingust/, /at least one linguist/, /at most one linguist/, /no linguist/, /few linguists/, etc.
+
+Can quantificational NPs be of type \(E\)? In fact, we can in fact show that they can't be.
+
+** Subset-to-superset inferences
+
+#+name: susan
+#+begin_exe
+\ex Susan came yesterday morning.\\
+\(\Rightarrow\) Susan came yesterday.
+#+end_exe
+
+#+begin_tcolorbox
+Why does this hold?
+#+end_tcolorbox
+
+Is the inference valid in the following case?
+
+#+name: atmost
+#+begin_exe
+\ex At most one letter came yesterday morning.
+\(\Rightarrow_?\) At most one letter came yesterday.
+#+end_exe
+
+#+begin_tcolorbox
+*Exercise:* figure out which (if any) quantificational NPs validate subset to superset inferences.
+#+end_tcolorbox
+
+** Law of non-contradiction
+
+#+name: mont
+#+begin_exe
+\ex Mont Blanc is higher than 4000m, and Mont Blanc is not higher than 4000m.
+#+end_exe
+
+#+name: mont2
+#+begin_exe
+\ex More than two mountains are higher than 4000m, and more than two mountains are not higher than 4000m.
+#+end_exe
+
+#+begin_tcolorbox
+*Exercise:* again, figure out which (if any) quantificational NPs validate the law of non-contradiction.
+#+end_tcolorbox
+
+* Predicates of predicates
+
+The solution, as we've alluded to, is to treat quantifiers as expressions of type \((E \to T) \to T\).
+
+What does this mean for their meaning?
+
+A helpful way to think about what quantifiers do exploits a correspondence between functions \(f: \mathbf{Dom}_\sigma \mapsto \set{\mathbf{true},\mathbf{false}}\), and /sets/ of things in \(\mathbf{Dom}_\sigma \).
+
+We can define the following translation; \(Set(f)\) is called the /set characterized by \(f\)/, and we can freely switch between sets and functions without losing information:
+
+\[Set(f) = \set{x | f(x) = \mathbf{true}}\]
+
+This allows us to think of predicates, for example, as denoting /sets of individuals/.
+
+Quantifiers, on the other hand, denote /sets of predicates/.
+
+As an example, consider /everything/ and /nothing/:
+
+#+name: eve
+#+begin_exe
+\ex \(\eval*{\mathbf{everything}} = \set{f| \forall x \in \mathbf{Dom}_E, f(x) = \mathbf{true}}\)
+#+end_exe
+
+Alternatively, if we think of the functions in the denotation of /everything as themselves sets:
+
+#+name: ev
+#+begin_exe
+\ex \(\eval*{\mathbf{everything}} = \set{X | \mathbf{Dom}_E \subseteq X}\)
+#+end_exe
+
+#+begin_tcolorbox
+*Exercise:* what about /something/ and /nothing/?
+#+end_tcolorbox
+
+* Determiners
+
+Based on what we know about the type of NPs, and the type of quantifiers, we can conclude what the type of a determiner such as /some/, /no/, and /every/ should be:
+
+\[(E \to T) \to (E \to T) \to T\]
+
+Determiners denote functions from predicates to quantifiers.
+
+In quasi-predicate-logic notation, we can write the following:
+
+#+name: ev
+#+begin_exe
+\ex \(\mathbf{every} := \lambda R\,.\,\lambda P\,.\,\forall x[R(x) \rightarrow P(x)]\)
+#+end_exe
+
+* Generalized quantifiers
+
+What is the meaning of /every cat/?
+
+In predicate logic, it would be something like the following:
+
+#+name: pred
+#+begin_exe
+\ex \(\lambda P\,.\,\forall x[\mathbf{cat}(x) \rightarrow P(x)]\)
+#+end_exe
+
+What set of sets does this quantifier characterize?
+
+#+name: set
+#+begin_exe
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \set{x | x\text{ is a cat} } \subseteq P}\)
+#+end_exe
+
+/some dog/:
+
+#+name: som
+#+begin_exe
+\ex \(\lambda P\,.\,\exists_x[\mathbf{dog}(x) \wedge P(x)]\)
+#+end_exe
+
+#+name: s
+#+begin_exe
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \set{x | x\text{ is a dog} \cap P \neq \emptyset  }}\)
+#+end_exe
+
+We can derive /everything/ and /something/, by replacing /cat/ and /dog/ with \(\mathbf{Dom}_E\).
+
+The strategy of characterizing quantifiers in terms of sets of sets generalizes to any quantificational expression.
+
+#+name: ex
+#+begin_exe
+\ex \(\eval*{\mathbf{nothing}} = \set{P \subseteq \mathbf{Dom}_E | P = \emptyset }\)
+\ex \(\eval*{\mathbf{exactlyTwoThings}} = \set{P \subseteq \mathbf{Dom}_E | \mathbf{Card}(P) = 2 }\)
+\ex \(\eval*{\mathbf{atleastTwoThings}} = \set{P \subseteq \mathbf{Dom}_E | \mathbf{Card}(P) \geq 2 }\)
+#+end_exe
+
+Sets of sets of entities are called *generalized quantifiers*.
+
+Determiners characterize curried /relations/ between sets, we call such relations between sets *determiner relations*.
+
+#+name: ev
+#+begin_exe
+\ex \(\eval*{\mathbf{every}} = \set{(R,P)|R \subseteq P}\)
+\ex \(\eval*{\mathbf{some}} = \set{(R,P)|R \cap P \neq \emptyset }\)
+#+end_exe
+
+#+print_bibliography:
+
+
