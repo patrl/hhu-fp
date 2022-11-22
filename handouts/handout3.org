@@ -6,6 +6,11 @@
 #+OPTIONS: ':t
 #+cite_export: biblatex
 
+* Reading
+
+- /Invitation to Formal Semantics/
+  * Chapter 7.4.2-7.5.
+
 * Recap
 
 Reading assigned last time:
@@ -26,12 +31,14 @@ Quantifificational NPs are of type \((E \to T) \to T\).
 Quantifiers can compose with VPs via /functional application/.
 
 #+begin_export latex
-\begin{forest}
+\begin{exe}
+\ex \begin{forest}
   [{\(\mathbf{everyone}(\mathbf{left}): T\)}
     [{\(\mathbf{everyone}: (E \to T) \to T\)}]
     [{\(\mathbf{left}: E \to T\)}]
   ]
 \end{forest}
+\end{exe}
 #+end_export
 
 They express /higher-order functions/ from functions to truth values.
@@ -66,4 +73,443 @@ In order to deal with quantificational NPs which are clearly decompositional, we
 \ex \(\mathbf{some} := \lambda R\,.\,\lambda P\,.\,\exists  x[R(x) \wedge  P(x)]\)
 \ex \(\mathbf{no} := \lambda R\,.\,\lambda P\,.\,\neg \exists  x[R(x) \wedge  P(x)]\)
 #+end_exe
+
+Determiners are expressions of type \((E \to T) \to (E \to T) \to  T\).
+
+We compose progressively via function application just as before:
+
+#+begin_export latex
+\begin{exe}
+\ex \begin{forest}
+  [{\(\forall x[\mathbf{linguist}(x) \rightarrow \mathbf{left}(x)]: T\)}
+  [{\(\lambda P\,.\,\forall x[\mathbf{linguist}(x) \rightarrow P(x)] : ET \to T\)}
+    [{\(\mathbf{every}: ET \to ET \to T\)}]
+    [{\(\mathbf{linguist}: ET\)}]
+  ]
+    [{\(\mathbf{left}: ET\)}]
+  ]
+\end{forest}
+\end{exe}
+#+end_export
+
+** Quantifiers scoping over disjunction
  
+Exercise 16, from the Coppock and Champollion textbook.
+
+#+name: evsmoke
+#+begin_exe
+\ex Everybody smokes or drinks.
+#+end_exe
+
+- Is a `conjunction reduction' analysis plausible?
+- Assume the following entry for "or" and show how this solves the problem. It might be useful to think about the meaning of /smokes or drinks/ and /everybody/ in set terms.
+
+#+name: or
+#+begin_exe
+\ex \(\mathbf{or} := \lambda P\,.\,Q\,.\,\lambda x\,.\,Q(x) \vee P(x)\)\hfill\(ET \to ET \to ET\)
+#+end_exe
+
+[cite:@ParteeRooth1983] show that the translation of *or* given above is a recursive generalization of boolean disjunction.
+
+(We'll actually come back to what this actually means when we cover continuation semantics).
+
+* Generalized quantifiers
+
+Generalized quantifiers are the sets of sets encoded by the functions denoted by quantificational NPs:
+
+#+name: evgen
+#+begin_exe
+\ex \(\mathbf{every}(\mathbf{cat}) = \lambda P\,.\,\forall x[\mathbf{cat}(x) \rightarrow P(x)]\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \set{x | \mathbf{cat}(x)} \subseteq P}\)
+\ex \(\mathbf{some}(\mathbf{dog}) = \lambda P\,.\,\exists  x[\mathbf{dog}(x) \wedge  P(x)]\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | P \cap \set{x | \mathbf{dog}(x)} \neq \emptyset }\)
+\ex \(\mathbf{everything} = \lambda P\,.\,\forall x[P(x)]\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \mathbf{Dom}_E \subseteq P} = \set{\mathbf{Dom}_E}\)
+\ex \(\mathbf{something} = \lambda P\,.\,\exists x[P(x)]\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \mathbf{Dom}_E \cap P \neq \emptyset } = \set{P \subseteq \mathbf{Dom}_E | P \neq \emptyset }\)
+\ex \(\mathbf{nothing} = \lambda P\,.\,\neg \exists x[P(x)]\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | P = \emptyset } = \set{\emptyset}\)
+#+end_exe
+
+Generalized quantifiers are more expressive than first order logic.
+
+#+name: exa
+#+begin_exe
+\ex \(\lambda P\,.\,\mathbf{exactlyTwoThings}(P)\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \mathbf{Card}(P) = 2}\)
+\ex \(\lambda P\,.\,\mathbf{atLeastTwoThings}(P)\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \mathbf{Card}(P) \geq 2}\)
+#+end_exe
+
+Famously, proportional quantifiers such as /most things/ can't be defined in first order logic at all:
+
+#+name: swans
+#+begin_exe
+\ex \(\lambda P\,.\,\mathbf{most}(\mathbf{swans})(P)\)
+\ex \(\set{P \subseteq \mathbf{Dom}_E | \mathbf{Card}(\set{x | \mathbf{swan}(x)} \cap P) \geq \mathbf{Card}(\set{x|\mathbf{swan}(x)} - P)}\)
+#+end_exe
+
+In set terms, determiners express /curried relations between sets/:
+
+#+name: evset
+#+begin_exe
+\ex \(\mathbf{every} := \lambda R\,.\,\lambda P\,.\,\forall x[R(x) \rightarrow P(x)]\)
+\ex \(\set{(R,P) | R \subseteq P}\)
+\ex \(\mathbf{some} := \lambda R\,.\,\lambda P\,.\,\exists x[R(x) \wedge  P(x)]\)
+\ex \(\set{(R,P) | R \cap P \neq \emptyset }\)
+#+end_exe
+
+- The \(R\) argument of a determiner is called its *restrictor*.
+- The \(P\) argument of a determiner is called its *nuclear scope*.
+  
+There are some logical properties that all natural language determiners seem to have in common, such as *conservativity*: /every A that Bs/ is always equivalent to /every A is an A that Bs/ (for /every/ as well as any other putative quantifier). see the Coppock and Champollion textbook for more discussion on this point.
+
+* Modification
+
+** Adjectival modification
+
+#+name: louise
+#+begin_exe
+\ex Louise is a happy dog.
+\ex \(\Rightarrow\) Louise is happy.
+\ex \(\Rightarrow\) Louise is a dog.
+#+end_exe
+
+#+name: how
+#+begin_exe
+\ex \(\mathbf{happy}: E \to T\)
+\ex \(\mathbf{dog}: E \to T\)
+#+end_exe
+
+A freely available type-shifting operator \(\wedge : ET \to ET \to ET\)
+
+#+name: type
+#+begin_exe
+\ex \(\wedge(P) := \lambda Q\,.\,\lambda x\,.\,P(x) \wedge Q(x)\)
+#+end_exe
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(\mathbf{happy}(\mathbf{Louise}) \wedge
+      \mathbf{dog}(\mathbf{Louise}): T\)}
+      [{\(\mathbf{Louise}: E\)}]
+      [{\(\lambda x\,.\,\mathbf{happy}(x) \wedge \mathbf{dog}(x) :ET\)}
+        [{\(\lambda P\,.\,\lambda x\,.\,\mathbf{happy}(x) \wedge P(x): ET - ET\)} [{\(\wedge(\mathbf{happy}) : ET \to ET\)}]]
+        [{\(\mathbf{dog} :E \to  T\)}]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+** Relative clauses
+
+#+name: dog
+#+begin_exe
+\ex dog that Josie loves.
+#+end_exe
+
+This expression characterizes an individual with two properties:
+
+- She is a dog.
+- Josie loves her.
+  
+In other words, this is (the characteristic function of) the intersection between the set of individuals that are dogs, and the set of individuals loved by Josie.
+
+We need to somehow translate /that Josie loves/ as follows:
+
+#+name: that
+#+begin_exe
+\ex \(\lambda x\,.\,\mathbf{loves}(x)(\mathbf{Josie}): E \to  T\)
+#+end_exe
+
+The strategy we'll pursue is to draw an analogy between the following:
+
+#+name: such
+#+begin_exe
+\ex dog that Josie loves.
+\ex dog such that Josie loves her.
+#+end_exe
+
+The /that/ or /who/ of the relative clause /moves/, and leaves behind a silent pronoun (called a trace) in its "base" position.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{CP}
+    [{who\(_{x}\)}]
+    [{C'}
+      [{\(\emptyset \)}]
+      [{S}
+        [{Josie}]
+        [{VP}
+          [{loves}]
+          [{\(t_{x}\)}]
+        ]
+      ]
+    ]]
+  \end{forest}
+\end{exe}
+#+end_export
+
+We assume that the syntax pairs the moved expression /who/ and its trace with matching variables - this will be important for the purposes of interpretation.
+
+We'll assume that traces are translated directly as variables. So, for example /Josie loves \(t_x\)/ is translated as:
+
+#+name: trans
+#+begin_exe
+\ex \(\mathbf{loves}(x)(\mathbf{Josie})\)
+#+end_exe
+
+In order to ensure that the variable gets bound by a matching lambda operator we (sadly) need a special, syncategorematic rule for translating structures involving binding operators. This special translation rule is called *Predicate Abstraction*.
+
+- \(\gamma \) is a syntax tree whole only two subtrees are \(\alpha_x\) and \(\beta \).
+- \(\beta \) is translated as \(\beta'\), an expression of type \(T\)
+- Then translate \(\gamma \) as \(\lambda x\,.\,\beta'\)
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{Predicate abstraction\\\(\lambda x\,.\,\mathbf{love}(x)(\mathbf{Josie})\)}
+      [{who\(_{i}\)}]
+      [{\(T\)}
+        [{\(\emptyset \)}]
+        [{\(\mathbf{love}(x)(\mathbf{Josie}): T\)}
+          [{\(\mathbf{Josie}: E\)}]
+          [{\(\mathbf{love}(x): E \to T\)}
+            [{\(\mathbf{love}: E \to E \to T\)}]
+            [{\(x : E\)}]
+          ]
+        ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+In order to account for cases without an overt /wh/-operator, i.e., relative clauses formed with /that/, or with nothing at all such as "the dog Josie loves", it's common to post a silent counterpart of /who\(_x\)/: \(Op_x\).
+
+#+name: op
+#+begin_exe
+\ex boy [\(Op_x\) Josie loves \(t_x\)]
+#+end_exe
+
+We can account for the composition of the relative clause and noun by invoking the same conjunctive type-shifter which we used for adjectival modification.
+
+#+name: conj
+#+begin_exe
+\ex \(\wedge (\lambda x\,.\,\mathbf{love}(x)(\mathbf{Josie}))(\mathbf{dog})\)
+#+end_exe
+
+- *Exercise:* verify that this gives back the right results.
+
+** Locality
+
+You might be skeptical about this analysis, especially when \(Op_i\) is implicated, but relative clause formation shows many of the same restrictions, as e.g., question formation in English.
+
+#+name: island
+#+begin_exe
+\ex *The boy [\(Op_x\) every friend of \(t_x\) insulted].
+\ex *Who\(_x\) did every friend of \(t_x\) insult?
+\ex *The boy [\(Op_x\) Sarah insulted \(t_x\) and praised Josie].
+\ex *Who\(_x\) did Sarah insult \(t_x\) and praise Josie?
+#+end_exe
+
+These constraints on movement are known as *island constraints* [cite:@Ross1967].
+
+The fact that relativization and /wh/-movement are subject to the same constraints suggests that they should receive a unified analysis [cite:@Chomsky1977].
+
+One interesting fact about this kind of movement is that it can proceed an arbitrary distance out of embedded environments.
+
+#+name: embedded
+#+begin_exe
+\ex the boy [\(Op_x\) Sarah believes [Josie insulted \(t_x\)]].
+\ex Who\(_i\) does Sarah believe [Josie insulted \(t_x\)]?
+\ex the boy [\(Op__x\) Sarah told me [that Sam believes [Josie insulted \(t_x\)]]]
+\ex Who\(_x\) did Sarah told me [that Sam believes [Josie insulted \(t_x\)]]?
+#+end_exe
+
+- We don't have a good treatment of the semantics of verbs like /believes/, but for the time being let's assume that it's of type \(T \to E \to T\).
+- Show how composition proceeds in the first example, above.
+  
+Once we introduce /movement/ in order to understand certain sentences with quantifiers, we'll return to this concept. It will be one of our initial motivations for moving over to continuation semantics. But first...
+
+* Quantifiers in object position
+
+A problem! Quantificational NPs can't compose when they're in any position other than subject position.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+[{\(T\)?}
+[{\(\mathbf{Louise}:E\)}]
+[{???}
+  [{\(\mathbf{loves}: E \to E \to T\)}]
+  [{\(\mathbf{every}(\mathbf{human}): (E \to T) \to T\)}]
+]
+]
+\end{forest}
+\end{exe}
+#+end_export
+
+Remember that /every human/ has the following meaning (roughly):
+
+#+name: evhuman
+#+begin_exe
+\ex \(\lambda P\,.\,\forall x[\mathbf{human}(x) \rightarrow P(x)]\) 
+#+end_exe
+
+In this case, an appropriate value for \(P\) would be one which maps an individual to true if Louise loves them, i.e.:
+
+#+name: lou
+#+begin_exe
+\ex \(\lambda x\,.\,\mathbf{love}(x)(\mathbf{Louise})\)
+#+end_exe
+
+We derive this component via a new syntactic transformation: /Quantifier raising/.
+
+Recall the special translation rule *Predicate abstraction*.
+
+- \(\gamma \) is a syntax tree whole only two subtrees are \(\alpha_x\) and \(\beta \).
+- \(\beta \) is translated as \(\beta'\), an expression of type \(T\)
+- Then translate \(\gamma \) as \(\lambda x\,.\,\beta'\)
+  
+We'll assume that any NP can be supplied with a variable by the syntax, and may move.
+
+We'll need to modify the translation rule slightly however, since NPs do more than just induce abstraction:
+
+- \(\gamma \) is a syntax tree whole only two subtrees are \(x\) and \(\beta \), where \(x\) is a variable.
+- \(\beta \) is translated as \(\beta'\), an expression of type \(T\)
+- Then translate \(\gamma \) as \(\lambda x\,.\,\beta'\)
+  
+Following [cite:@HeimKratzer1998], we assume that movement of an NP involves rebracketing of the associated variable with the sister of the moved NP.
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+[{S}
+[{Every human}]
+[{S}
+  [{\(x\)}]
+  [{S}
+    [{Louise}]
+    [{VP}
+      [{loves}]
+      [{\(t_{x}\)}]
+    ]
+  ]
+]
+]
+\end{forest}
+\end{exe}
+#+end_export
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+[{\(\forall x[\mathbf{human}(x) \rightarrow \mathbf{loves}(x)(\mathbf{Louise})]\)}
+[{\(\lambda P\,.\,\forall x[\mathbf{human}(x) \rightarrow P(x)]: (E \to T) \to T\)}]
+[{Predicate Abstraction\\\(\lambda x\,.\,\mathbf{loves}(x)(\mathbf{Louise}): E \to T\)}
+  [{\(x\)}]
+  [{\(\mathbf{loves}(x)(\mathbf{Louise})\)}
+    [{\(\mathbf{Louise}:E\)}]
+    [{\(\mathbf{loves}(x) : E \to T\)}
+      [{\(\mathbf{loves}: E \to E \to T\)}]
+      [{\(x\)}]
+    ]
+  ]
+]
+]
+\end{forest}
+\end{exe}
+#+end_export
+
+The idea of Quantifier raising was originally formulated in a syntactic theory with several levels of representation [cite:@May1977]:
+
+- Narrow syntax (sometimes split into deep and surface structure)
+- Logical Form (the input to semantic interpretation)
+- Phonological Form (the input to pronunciation)
+  
+#+begin_export latex
+\begin{center}
+\begin{forest}
+[{Syntax}
+[{LF}]
+[{PF}]
+]
+\end{forest}
+\end{center}
+#+end_export
+
+Quantifier raising is an operation that takes place on the branch from Syntax to LF, therefore it has semantic consequences but not phonological consequences.
+
+Other operations, like /wh/-movement, and relative clause formation, take place in the syntax, and therefore have both semantic /and/ phonological consequences.
+
+** Scope ambiguities with operators
+
+#+name: ex3 
+#+begin_exe
+\ex John hasn't read exactly three books.
+#+end_exe
+
+1. /The cardinality of books that John hasn't read is 3./
+  Can be true, for example, if John has read 3 of the books, and hasn't read 3 of the books.
+2. /It's not the case that the cardinality of books that John has read is 3./
+  Can be true, for example, if John has read 4 of the books and hasn't read 2 of them.
+  
+Note that, in scenario 1, the first reading is true, and the seconds is false; in scenario 2; the first reading is false, and the second reading is true, so these readings are semantically independent.
+
+#+name: 
+#+begin_exe
+\ex \(\mathbf{Card}(\set{x | \mathbf{book}(x)} \cap \set{x | \neg \mathbf{read}(x)(\mathbf{John})}) = 3\)
+\ex \(\mathbf{Card}(\set{x | \mathbf{book}(x)} \cap \set{x | \mathbf{read}(x)(\mathbf{John})}) \neq 3\)
+#+end_exe
+
+The possibility of quantifier raising can be used to derive these two readings.
+
+#+begin_export latex
+\begin{forest}
+[{S}
+[{exactly 3}]
+[{S}
+  [{\(x\)}]
+  [{S}
+    [{not}]
+    [{S}
+      [{John}]
+      [{VP}
+        [{read}]
+        [{\(t_{x}\)}]
+      ]
+    ]
+  ]
+]
+]
+\end{forest} 
+\qquad
+\begin{forest}
+[{S}
+[{not}]
+[{S}
+  [{exactly three}]
+  [{S}
+    [{\(x\)}]
+    [{S}
+      [{John}]
+      [{VP}
+        [{read}]
+        [{\(t_{x}\)}]
+      ]
+    ]
+  ]
+]
+]
+\end{forest}  
+#+end_export
