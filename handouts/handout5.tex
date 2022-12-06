@@ -1,0 +1,79 @@
+% Created 2022-12-05 Mon 23:03
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{QR recap and argument raising}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={QR recap and argument raising},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\addbibresource{~/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Exercises (from Coppock and Champollion)}
+\label{sec:org4601281}
+
+\subsection{Composing quantifiers in object position}
+\label{sec:org1745c6e}
+
+Produce a translation into the simply-typed lambda calculus for the following sentence:
+
+\begin{exe}
+\ex Beth speaks a European language.
+\label{orga7cf4ec}
+\end{exe}
+
+Here are some translations to help you get started.  
+
+\begin{itemize}
+\item Beth \(\Rightarrow\) \(\mathbf{Beth} : E\)
+\item speaks \(\Rightarrow\) \(\mathbf{speaks} : E \to E \to T\)
+\item European \(\Rightarrow\) \(\lambda P_{ET }\,.\,\lambda x\,.\,\mathbf{european}(x) \wedge P(x) : (E \to T) \to E \to T\)
+\item language \(\Rightarrow\) \(\mathbf{language} :E \to T\)
+\item a \(\Rightarrow\) \(\lambda R_{ET}\,.\,\lambda S_{ET}\,.\,\exists x[P(x) \wedge Q(x)] : (E \to T) \to (E \to T) \to T\)
+\end{itemize}
+
+Some important facts about quantifier raising.
+\begin{itemize}
+\item Traces are translated into \emph{variables}.
+\item The moved expression introduces an \emph{abstraction variable} into the LF, which triggers a special translation rule, \emph{predicate abstraction}.
+\end{itemize}
+
+\textbf{Predicate abstraction} works as follows:
+
+\begin{itemize}
+\item \(\gamma\) is a syntax tree whose only two subtrees are \(x\) and \(\beta\), where \(x\) is an abstraction variable.
+\item \(\beta\) is translated as \(\beta'\), an expression of type \(T\)
+\item Then translate \(\gamma\) as \(\lambda x\,.\,\beta'\)
+\end{itemize}
+
+Now, the exercise proper:
+
+\begin{itemize}
+\item Draw synax trees for the sentence (\ref{orga7cf4ec}),  both before and after quantifier raising (assume that ``a European language'' undergoes QR). The syntax tree post-quantifier raising is called the ``LF''.
+\item Provide a translation for the sentence into the lambda calculus by compositionally translating each component part, and reducing the result using the reduction rules we've discussed.
+\end{itemize}
+\end{document}

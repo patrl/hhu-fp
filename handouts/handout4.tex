@@ -1,0 +1,504 @@
+% Created 2022-11-29 Tue 11:11
+% Intended LaTeX compiler: pdflatex
+\documentclass[letterpaper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{braket}
+\input{boilerplate}
+\author{Patrick D. Elliott}
+\date{\today}
+\title{Quantifier raising continued}
+\hypersetup{
+ pdfauthor={Patrick D. Elliott},
+ pdftitle={Quantifier raising continued},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.2 (Org mode 9.5.5)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{/home/patrl/repos/bibliography/master.bib}
+\addbibresource{~/repos/bibliography/master.bib}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Recap: movement and traces}
+\label{sec:org0a560f3}
+
+\begin{exe}
+\ex dog who\(_i\) Josie loves \(t_i\).
+\label{orgc5b553f}
+\end{exe}
+
+The \emph{who} of the relative clause \emph{moves}, and leaves behind a silent pronoun (called a trace) in its ``base'' position.
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{CP}
+    [{who\(_{x}\)}]
+    [{C'}
+      [{\(\emptyset \)}]
+      [{S}
+        [{Josie}]
+        [{VP}
+          [{loves}]
+          [{\(t_{x}\)}]
+        ]
+      ]
+    ]]
+  \end{forest}
+\end{exe}
+
+We assume that the syntax pairs the moved expression \emph{who} and its trace with matching variables - this will be important for the purposes of interpretation.
+
+We'll assume that traces are translated directly as variables. So, for example \emph{Josie loves \(t_x\)} is translated as:
+
+\begin{exe}
+\ex \(\mathbf{loves}(x)(\mathbf{Josie})\)
+\label{org1868658}
+\end{exe}
+
+In order to ensure that the variable gets bound by a matching lambda operator we (sadly) need a special, syncategorematic rule for translating structures involving binding operators. This special translation rule is called \textbf{Predicate Abstraction}.
+
+\begin{itemize}
+\item \(\gamma\) is a syntax tree whole only two subtrees are \(\alpha_x\) and \(\beta\).
+\item \(\beta\) is translated as \(\beta'\), an expression of type \(T\)
+\item Then translate \(\gamma\) as \(\lambda x\,.\,\beta'\)
+\end{itemize}
+
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{Predicate abstraction\\\(\lambda x\,.\,\mathbf{love}(x)(\mathbf{Josie})\)}
+      [{who\(_{x}\)}]
+      [{\(T\)}
+        [{\(\emptyset \)}]
+        [{\(\mathbf{love}(x)(\mathbf{Josie}): T\)}
+          [{\(\mathbf{Josie}: E\)}]
+          [{\(\mathbf{love}(x): E \to T\)}
+            [{\(\mathbf{love}: E \to E \to T\)}]
+            [{\(x : E\)}]
+          ]
+        ]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+
+In order to account for cases without an overt \emph{wh}-operator, i.e., relative clauses formed with \emph{that}, or with nothing at all such as ``the dog Josie loves'', it's common to post a silent counterpart of \emph{who\(_x\)}: \(Op_x\).
+
+\begin{exe}
+\ex boy [\(Op_x\) Josie loves \(t_x\)]
+\label{orga5db728}
+\end{exe}
+
+We can account for the composition of the relative clause and noun by invoking the same conjunctive type-shifter which we used for adjectival modification.
+
+\begin{exe}
+\ex \(\wedge (\lambda x\,.\,\mathbf{love}(x)(\mathbf{Josie}))(\mathbf{dog})\)
+\label{orgb5fd0ff}
+\end{exe}
+
+\subsection{Locality}
+\label{sec:orgca74d89}
+
+You might be skeptical about this analysis, especially when \(Op_i\) is implicated, but relative clause formation shows many of the same restrictions, as e.g., question formation in English.
+
+\begin{exe}
+\ex *The boy [\(Op_x\) every friend of \(t_x\) insulted Josie].
+\ex *Who\(_x\) did every friend of \(t_x\) insult Josie?
+\ex *The boy [\(Op_x\) Sarah insulted \(t_x\) and praised Josie].
+\ex *Who\(_x\) did Sarah insult \(t_x\) and praise Josie?
+\label{org2ac71e6}
+\end{exe}
+
+These constraints on movement are known as \textbf{island constraints} \autocite{Ross1967}.
+
+The fact that relativization and \emph{wh}-movement are subject to the same constraints suggests that they should receive a unified analysis \autocite{Chomsky1977}.
+
+One interesting fact about this kind of movement is that it can proceed an arbitrary distance out of embedded environments.
+
+\begin{exe}
+\ex the boy [\(Op_x\) Sarah believes [Josie insulted \(t_x\)]].
+\ex Who\(_i\) does Sarah believe [Josie insulted \(t_x\)]?
+\ex the boy [\(Op_x\) Sarah told me [that Sam believes [Josie insulted \(t_x\)]]].
+\ex Who\(_x\) did Sarah told me [that Sam believes [Josie insulted \(t_x\)]]?
+\label{org20e5059}
+\end{exe}
+
+\begin{itemize}
+\item We don't have a good treatment of the semantics of verbs like \emph{believes}, but for the time being let's assume that it's of type \(T \to E \to T\).
+\item Show how composition proceeds in the first example, above.
+\end{itemize}
+
+Once we introduce \emph{movement} in order to understand certain sentences with quantifiers, we'll return to this concept. It will be one of our initial motivations for moving over to continuation semantics. But first\ldots{}
+
+\section{Quantifiers in object position}
+\label{sec:org48a84bb}
+
+A problem! Quantificational NPs can't compose when they're in any position other than subject position.
+
+\begin{exe}
+  \ex
+  \begin{forest}
+[{\(T\)?}
+[{\(\mathbf{Louise}:E\)}]
+[{???}
+  [{\(\mathbf{loves}: E \to E \to T\)}]
+  [{\(\mathbf{every}(\mathbf{human}): (E \to T) \to T\)}]
+]
+]
+\end{forest}
+\end{exe}
+
+Remember that \emph{every human} has the following meaning (roughly):
+
+\begin{exe}
+\ex \(\lambda P\,.\,\forall x[\mathbf{human}(x) \rightarrow P(x)]\) 
+\label{org6e884c6}
+\end{exe}
+
+In this case, an appropriate value for \(P\) would be one which maps an individual to true if Louise loves them, i.e.:
+
+\begin{exe}
+\ex \(\lambda x\,.\,\mathbf{love}(x)(\mathbf{Louise})\)
+\label{org7e0dab9}
+\end{exe}
+
+We derive this component via a new syntactic transformation: \emph{Quantifier raising}.
+
+Recall the special translation rule \textbf{Predicate abstraction}.
+
+\begin{itemize}
+\item \(\gamma\) is a syntax tree whole only two subtrees are \(\alpha_x\) and \(\beta\).
+\item \(\beta\) is translated as \(\beta'\), an expression of type \(T\)
+\item Then translate \(\gamma\) as \(\lambda x\,.\,\beta'\)
+\end{itemize}
+
+We'll assume that any NP can be supplied with a variable by the syntax, and may move.
+
+We'll need to modify the translation rule slightly however, since NPs do more than just induce abstraction:
+
+\begin{itemize}
+\item \(\gamma\) is a syntax tree whole only two subtrees are \(x\) and \(\beta\), where \(x\) is a variable.
+\item \(\beta\) is translated as \(\beta'\), an expression of type \(T\)
+\item Then translate \(\gamma\) as \(\lambda x\,.\,\beta'\)
+\end{itemize}
+
+Following \autocite{HeimKratzer1998}, we assume that movement of an NP involves rebracketing of the associated variable with the sister of the moved NP.
+
+\begin{exe}
+  \ex
+  \begin{forest}
+[{S}
+[{Every human}]
+[{S}
+  [{\(x\)}]
+  [{S}
+    [{Louise}]
+    [{VP}
+      [{loves}]
+      [{\(t_{x}\)}]
+    ]
+  ]
+]
+]
+\end{forest}
+\end{exe}
+
+\begin{exe}
+  \ex
+  \begin{forest}
+[{\(\forall x[\mathbf{human}(x) \rightarrow \mathbf{loves}(x)(\mathbf{Louise})]\)}
+[{\(\lambda P\,.\,\forall x[\mathbf{human}(x) \rightarrow P(x)]: (E \to T) \to T\)}]
+[{Predicate Abstraction\\\(\lambda x\,.\,\mathbf{loves}(x)(\mathbf{Louise}): E \to T\)}
+  [{\(x\)}]
+  [{\(\mathbf{loves}(x)(\mathbf{Louise})\)}
+    [{\(\mathbf{Louise}:E\)}]
+    [{\(\mathbf{loves}(x) : E \to T\)}
+      [{\(\mathbf{loves}: E \to E \to T\)}]
+      [{\(x\)}]
+    ]
+  ]
+]
+]
+\end{forest}
+\end{exe}
+
+The idea of Quantifier raising was originally formulated in a syntactic theory with several levels of representation \autocite{May1977}:
+
+\begin{itemize}
+\item Narrow syntax (sometimes split into deep and surface structure)
+\item Logical Form (the input to semantic interpretation)
+\item Phonological Form (the input to pronunciation)
+\end{itemize}
+
+\begin{center}
+\begin{forest}
+[{Syntax}
+[{LF}]
+[{PF}]
+]
+\end{forest}
+\end{center}
+
+Quantifier raising is an operation that takes place on the branch from Syntax to LF, therefore it has semantic consequences but not phonological consequences.
+
+Other operations, like \emph{wh}-movement, and relative clause formation, take place in the syntax, and therefore have both semantic \emph{and} phonological consequences.
+
+\subsection{Scope ambiguities with operators}
+\label{sec:orgf295bd8}
+
+\begin{exe}
+\ex John hasn't read exactly three books.
+\label{orga891543}
+\end{exe}
+
+\begin{enumerate}
+\item \emph{The cardinality of books that John hasn't read is 3.}
+Can be true, for example, if John has read 3 of the books, and hasn't read 3 of the books.
+\item \emph{It's not the case that the cardinality of books that John has read is 3.}
+Can be true, for example, if John has read 4 of the books and hasn't read 2 of them.
+\end{enumerate}
+
+Note that, in scenario 1, the first reading is true, and the seconds is false; in scenario 2; the first reading is false, and the second reading is true, so these readings are semantically independent.
+
+\begin{exe}
+\ex \(\mathbf{Card}(\set{x | \mathbf{book}(x)} \cap \set{x | \neg \mathbf{read}(x)(\mathbf{John})}) = 3\)
+\ex \(\mathbf{Card}(\set{x | \mathbf{book}(x)} \cap \set{x | \mathbf{read}(x)(\mathbf{John})}) \neq 3\)
+\label{org6595b2a}
+\end{exe}
+
+The possibility of quantifier raising derives these two readings.
+
+\subsubsection{Wide scope reading}
+\label{sec:orgd7d0ec2}
+
+Let's start with the \emph{wide scope reading of exactly 3}, which corresponds to scenario 1, and the tree below.
+
+\begin{forest}
+[{\(T\) \\ S}
+[{\((E \to T) \to T\)\\exactly 3}]
+[{\(E \to T\) \\ \textit{Predicate absraction}\\ S}
+  [{\(x\)}]
+  [{\(T\) \\ S}
+    [{\(T \to T\) \\ not}]
+    [{\(T\)\\ S}
+      [{\(E\)\\John}]
+      [{\(E \to T\)\\VP}
+        [{\(E \to E \to T\)\\read}]
+        [{\(E\)\\\(t_{x}\)}]
+      ]
+    ]
+  ]
+]
+]
+\end{forest} 
+
+The complement of \emph{not} is an open sentence containing a trace:
+
+\begin{exe}
+\ex \(\mathbf{not}(\mathbf{read}(x)(j))\)
+\label{org7a283e8}
+\end{exe}
+
+Movement of \emph{exactly 3} creates an \emph{abstraction variable} \(x\), which triggers predicate abstraction.
+
+The result is a functional expression of type \(E \to T\).
+
+name: open
+\begin{exe}
+\ex \(\lambda x\,.\,\mathbf{not}(\mathbf{read}(x)(j))\)
+\end{exe}
+
+What set does this characterize? The set of books that weren't read by John.
+
+\begin{exe}
+\ex \(\set{x | \text{John didn't read }x}\)
+\label{org3df0a72}
+\end{exe}
+
+\emph{Exactly 3 books} is a function from \(P\) to true, if the cardinality of the intersection of \(P\) with the set of books is \(3\).
+
+\begin{exe}
+\ex \(\eval*{\mathbf{exactly3books}(P)} = \text{true iff }\mathbf{card}(\set{x | x\text{ is a book } } \cap P) = 3\)
+\label{org872317d}
+\end{exe}
+
+We now apply the meaning of \emph{exactly 3} to the meaning of the result of predicate abstraction:
+
+\begin{exe}
+\ex \(= \text{true iff }\mathbf{card}(\set{x |x\text{ is a book} } \cap \set{x | \text{John didn't read }x}) = 3\)\\[0pt]
+\(= \text{true iff }\mathbf{card}(\set{x |x\text{ is a book that John didn't read} }) = 3\)
+\label{org41539eb}
+\end{exe}
+
+\subsubsection{Narrow scope reading}
+\label{sec:orga512369}
+
+\begin{forest}
+[{\(T\)\\ S}
+[{\(T \to T\) \\ not}]
+[{\(T\)\\ S}
+  [{\((E \to T) \to T\)\\exactly three}]
+  [{\(E \to T\)\\ \textit{Predicate abstraction}\\ S}
+    [{\(x\)}]
+    [{\(T\)\\ S}
+      [{\(E\)\\John}]
+      [{\(E \to T\)\\VP}
+        [{\(E \to E \to T\)\\read}]
+        [{\(E\)\\\(t_{x}\)}]
+      ]
+    ]
+  ]
+]
+]
+\end{forest}  
+
+Here, \emph{exactly 3} moves and adjoins \emph{below} negation; the complement of \emph{exactly 3 books} is the following open sentence:
+
+\begin{exe}
+\ex \(\mathbf{read}(x)(j)\)
+\label{org9b47323}
+\end{exe}
+
+The abstraction variable \(x\), created by movement of \emph{exactly 3 books}, triggers predicate abstraction:
+
+\begin{exe}
+\ex \(\lambda x\,.\,\mathbf{read}(x)(j)\)
+\end{exe}
+
+This function characterise the following set:
+
+\begin{exe}
+\ex \(\set{x | \text{John read }x }\)
+\label{org4028b59}
+\end{exe}
+
+We combine this with \emph{exactly 3 books}, as before, and get the following truth-conditions:
+
+\begin{exe}
+\ex \(\eval*{\mathbf{exactly3books}(\lambda x\,.\,\mathbf{read}(x)(j))}\)\\[0pt]
+\(\text{true iff }\mathbf{card}(\set{x|x\text{ is a book that John read}}) = 3\)
+\label{org2ccc2ed}
+\end{exe}
+
+Now negation applies and flips the truth conditions:
+
+\begin{exe}
+\ex \(\text{false iff }\mathbf{card}(\set{x|x\text{ is a book that John read}}) = 3\)\\[0pt]
+\(= \text{true iff }\mathbf{card}(\set{x|x\text{ is a book that John read}}) \neq 3\)
+\label{org550e689}
+\end{exe}
+
+We therefore derive the two readings by allowing quantifier raising to adjoin the moved quantifier to any node of type \(T\).
+
+\subsubsection{A note on quantifiers in subject position}
+\label{sec:org43ad983}
+
+Note that there is no type reason for quantifiers in subject position to undergo quantifier raising, but doing so is harmless.
+
+It might also be useful for examples such as the following:
+
+\begin{exe}
+\ex Exactly 3 students didn't leave.
+\label{org120de71}
+\end{exe}
+
+This also seems like it has an ambiguity between a reading where \emph{exactly 3 takes scope over negation}, and one where \emph{exactly 3 takes scope below negation}.
+
+We could assume the following logical form for the wide-scope reading:
+
+\begin{forest}
+  [{\(T\)}
+    [{\((E \to T) \to T\)} [{exactly 3 students},roof]]
+    [{\(E \to T\)\\\textit{Predicate abstraction}}
+      [{\(x\)}]
+      [{\(T\)}
+        [{\(T \to T\)\\not}]
+        [{\(T\)}
+          [{\(E\)\\\(t_{x}\)}]
+          [{\(E \to T\)\\leave}]
+        ]
+      ]
+    ]
+  ]
+\end{forest}
+
+The narrow-scope reading, on the other hand, may simply involve \emph{exactly 3 students} remaining in-situ.
+
+\begin{forest}
+  [{\(T\)}
+    [{\(T \to T\)\\ not}]
+    [{\(T\)}
+      [{\((E \to T) \to T\)\\exactly 3 students}]
+      [{\(E \to T\)\\leave}]
+    ]
+  ]
+  \end{forest}
+
+\subsubsection{A locality problem for quantifier raising}
+\label{sec:org6083be2}
+
+The idea sketched here is that quantifier scope ambiguities can be derived by assuming a silent counterpart of the operation used for relativization/wh-movement \autocite{May1977}.
+
+Although, as we saw, relativization and wh-movement are subject to strict locality conditions, both can proceed from out of an embedded clause.
+
+\begin{exe}
+\ex the boy [\(Op_x\) Sarah believes [Josie insulted \(t_x\)]].
+\ex Who\(_i\) does Sarah believe [Josie insulted \(t_x\)]?
+\ex the boy [\(Op_x\) Sarah told me [that Sam believes [Josie insulted \(t_x\)]]].
+\ex Who\(_x\) did Sarah told me [that Sam believes [Josie insulted \(t_x\)]]?
+\label{org3acecfe}
+\end{exe}
+
+Quantifier raising doesn't seem to parallel this behaviour. Consider the following example:
+
+\begin{exe}
+\ex Sarah didn't tell me that Sam read exactly three books.
+\label{org9b9e165}
+\end{exe}
+
+Imagine that Sam read four books:
+
+\begin{itemize}
+\item War and Peace
+\item Anna Karenina
+\item The Idiot
+\item The White Guard
+\end{itemize}
+
+Sarah told me that Sam read \emph{The White Guard}, but she neglected to tell me that he read \emph{War and Peace}, \emph{Anna Karenina}, and \emph{The Idiot}.
+
+The sentence intuitively feels \emph{false} in this scenario, but a super wide scope reading would predict it should be true:
+
+\begin{exe}
+\ex exactly three books \(\lambda x\) [Sarah didn't tell me [that Sam read \(t_x\)]]
+\label{org43b7c74}
+\end{exe}
+
+The only attested reading corresponds to a scenario where Sam read exactly three books, but Sarah didn't tell me that he did.
+
+\begin{exe}
+\ex Sarah didn't tell me [exactly three books \(\lambda x\) [that Sam read \(t_x\)]]
+\label{org03c232e}
+\end{exe}
+
+If quantifier raising is silent counterpart of relativization and wh-movement, then this is mysterious.
+
+We'll use this as an initial motivation to explore a different derivation for quantifiers in object position, based on \emph{type shifting} (next week).
+
+\printbibliography
+\end{document}

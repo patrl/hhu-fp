@@ -1,0 +1,113 @@
+#+title: QR recap and argument raising
+#+author: Patrick D. Elliott
+#+bibliography: ../../bibliography/master.bib
+#+setupfile: ./handout-template.org
+#+OPTIONS: ':t
+#+cite_export: biblatex
+
+* Exercises (from Coppock and Champollion)
+
+** Composing quantifiers in object position
+
+Produce a translation into the simply-typed lambda calculus for the following sentence:
+
+#+name: beth 
+#+begin_exe
+\ex Beth speaks a European language.
+#+end_exe
+
+Here are some translations to help you get started.  
+
+- Beth \(\Rightarrow\) \(\mathbf{Beth} : E\)
+- speaks \(\Rightarrow\) \(\mathbf{speaks} : E \to E \to T\)
+- European \(\Rightarrow\) \(\lambda P_{ET }\,.\,\lambda x\,.\,\mathbf{european}(x) \wedge P(x) : (E \to T) \to E \to T\)
+- language \(\Rightarrow\) \(\mathbf{language} :E \to T\)
+- a \(\Rightarrow\) \(\lambda R_{ET}\,.\,\lambda S_{ET}\,.\,\exists x[P(x) \wedge Q(x)] : (E \to T) \to (E \to T) \to T\)
+  
+Some important facts about quantifier raising.
+- Traces are translated into /variables/.
+- The moved expression introduces an /abstraction variable/ into the LF, which triggers a special translation rule, /predicate abstraction/.
+  
+*Predicate abstraction* works as follows:
+
+- \(\gamma \) is a syntax tree whose only two subtrees are \(x\) and \(\beta \), where \(x\) is an abstraction variable.
+- \(\beta \) is translated as \(\beta'\), an expression of type \(T\)
+- Then translate \(\gamma \) as \(\lambda x\,.\,\beta'\)
+
+Now, the exercise proper:
+
+- Draw synax trees for the sentence ([[beth]]),  both before and after quantifier raising (assume that "a European language" undergoes QR). The syntax tree post-quantifier raising is called the "LF".
+- Provide a translation for the sentence into the lambda calculus by compositionally translating each component part, and reducing the result using the reduction rules we've discussed. 
+
+** Scope ambiguities
+
+The following sentence is ambiguous:
+
+#+name: ambig
+#+begin_exe
+\ex Some linguist offended every philosopher.
+#+end_exe
+
+- Paraphrase the two different readings.
+- Give an LF tree for each of the two readings, and specify the translation into the lambda calculus at every node of your tree. 
+  
+N.b., we'll assume the following translation for /every/, the rest you should be able to figure out:
+
+- every \(\Rightarrow\) \(\lambda R_{ET}\,.\,\lambda S_{ET}\,.\,\forall x[R(x) \rightarrow S(x)]: (E \to T) \to (E \to T) \to T\)
+  
+** Fragment
+
+For each of the following sentences, provide a full analysis consisting of:
+
+- Translations for each of the lexical items.
+- A syntactic tree (or more than one, if the sentence is ambiguous), where for each node you give:
+  * An indication of the semantic type.
+  * A full beta-reduced representation of the denotation in the lambda calculus.
+  * A note of which composition rule you used.
+    
+#+name: sentences
+#+begin_exe
+\ex Every conservative congressman smokes.
+\ex No congressman who smokes dislikes Susan.
+\ex Susian respects no congressman who smokes.
+\ex Susan dislikes every congressman.
+\ex Some congressman from every state smokes.
+\ex Every congressman respects himself.
+#+end_exe
+
+Note you might have to get a little creative with the final two examples.
+
+* Quantifier scope via type-shifting
+
+Using type-shifting rules to compose quantifiers in object position is an idea which goes back to Hendriks (1993). 
+
+He proposes the type-shifting rule of *object raising* (\(\mathbf{Raise}_O\)), defined as follows:
+
+#+name: raise-o
+#+begin_exe
+\ex \(\mathbf{Raise}_O (\alpha{}_{E \to \sigma T}) := \lambda Q_{ET \to T}\,.\,\lambda x_\alpha{}\,.\,Q(\lambda x_{E}\,.\,Q(\lambda y\,.\,\alpha(y)(x)))\)\\
+(for any type \(\sigma \))
+#+end_exe
+
+Base on its type, how might we use object-raising to analyze the following sentence?
+
+#+name: bjorn 
+#+begin_exe
+\ex Bjorn loves everybody.
+#+end_exe
+
+What about the following sentence? Which reading do we derive?
+
+#+name: soev
+#+begin_exe
+\ex Someone loves everybody.
+#+end_exe
+
+In order to derive the inverse scope we also need an additional type-shifting rule: subject raising. 
+
+#+name: subj-raise
+#+begin_exe
+\ex \(\mathbf{Raise}_S(\alpha{}_{\sigma \to ET}) = \lambda y_{\sigma }\,.\,Q_{ET \to T}\,.\,Q(\lambda x_{E}\,.\,\alpha(y)(x))\)
+#+end_exe
+
+Does it make a difference, the order in which we apply the two rules? We'll use this to derive the scope ambiguity.
