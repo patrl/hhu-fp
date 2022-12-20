@@ -38,6 +38,7 @@ Now, the exercise proper:
 
 - Draw synax trees for the sentence ([[beth]]),  both before and after quantifier raising (assume that "a European language" undergoes QR). The syntax tree post-quantifier raising is called the "LF".
 - Provide a translation for the sentence into the lambda calculus by compositionally translating each component part, and reducing the result using the reduction rules we've discussed. 
+  
 
 ** Scope ambiguities
 
@@ -85,7 +86,7 @@ He proposes the type-shifting rule of *object raising* (\(\mathbf{Raise}_O\)), d
 
 #+name: raise-o
 #+begin_exe
-\ex \(\mathbf{Raise}_O (\alpha{}_{E \to \sigma T}) := \lambda Q_{ET \to T}\,.\,\lambda x_\alpha{}\,.\,Q(\lambda x_{E}\,.\,Q(\lambda y\,.\,\alpha(y)(x)))\)\\
+\ex \(\mathbf{Raise}_O (\alpha{}_{E \to \sigma T}) := \lambda Q_{ET \to T}\,.\,\lambda x_{\sigma}\,.\,Q(\lambda y_{E}\,.\,\alpha(y)(x)))\)\\
 (for any type \(\sigma \))
 #+end_exe
 
@@ -96,11 +97,60 @@ Base on its type, how might we use object-raising to analyze the following sente
 \ex Bjorn loves everybody.
 #+end_exe
 
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{Bjorn: \(E\)}]
+      [{\(E \to T\)}
+      [{\((ET \to T) \to ET\)}
+        [{\(\mathbf{Raise}_{O}: (E \to ET) \to  (ET \to T) \to ET\)}]
+        [{loves: \(E \to E \to T\)}]
+      ]
+        [{everybody: \((E \to T) \to T\)}]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+#+name: raise-der
+#+begin_exe
+\ex \(\mathbf{Raise}_O(\mathbf{love}) = \lambda Q\,.\,\lambda x\,.\,Q(\lambda y\,.\,\mathbf{love}(y)(x))\)
+\ex \(\mathbf{Raise}_O(\mathbf{love})(\mathbf{everybody}) = \lambda x\,.\,\mathbf{everybody}(\lambda y\,.\,\mathbf{love}(y)(x))\)
+\ex \(\mathbf{Raise}_O(\mathbf{love})(\mathbf{everybody})(\mathbf{Bjorn}) = \mathbf{everybody}(\lambda y\,.\,\mathbf{love}(y)(\mathbf{Bjorn}))\)
+#+end_exe
+
 What about the following sentence? Which reading do we derive?
 
 #+name: soev
 #+begin_exe
 \ex Someone loves everybody.
+#+end_exe
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{Someone: \((E \to T) \to T\)}]
+      [{\(ET\)}
+      [{\((ET \to T) \to ET\)}
+        [{\(\mathbf{Raise}_{O} : (E \to ET) \to (ET \to T) \to ET\)}]
+        [{loves: \(E \to ET\)}]
+      ]
+        [{everybody: \(ET \to T\)}]
+      ]
+    ]\end{forest}
+\end{exe}
+#+end_export
+
+#+name: der2
+#+begin_exe
+\ex  \(\mathbf{Raise}_O(\mathbf{love}) = \lambda Q\,.\,\lambda x\,.\,Q(\lambda y\,.\,\mathbf{love}(y)(x))\)
+\ex \(\mathbf{Raise}_O(\mathbf{love})(\mathbf{everybody}) = \lambda x\,.\,\mathbf{everybody}(\lambda y\,.\,\mathbf{love}(y)(x))\)
+\ex \(\mathbf{someone}(\mathbf{Raise}_O(\mathbf{love})(\mathbf{everybody})) = \mathbf{someone}(\lambda x\,.\,\mathbf{everybody}(\lambda y\,.\,\mathbf{love}(y)(x)))\)
 #+end_exe
 
 In order to derive the inverse scope we also need an additional type-shifting rule: subject raising. 
@@ -110,4 +160,35 @@ In order to derive the inverse scope we also need an additional type-shifting ru
 \ex \(\mathbf{Raise}_S(\alpha{}_{\sigma \to ET}) = \lambda y_{\sigma }\,.\,Q_{ET \to T}\,.\,Q(\lambda x_{E}\,.\,\alpha(y)(x))\)
 #+end_exe
 
-Does it make a difference, the order in which we apply the two rules? We'll use this to derive the scope ambiguity.
+In fact, we'll need both!
+
+#+begin_export latex
+\begin{exe}
+  \ex
+  \begin{forest}
+    [{\(T\)}
+      [{someone: \(ET \to T\)}]
+      [{\(ETT \to T\)}
+      [{\(ETT \to ETT \to T\)}
+        [{\(\mathbf{Raise}_{O} : (ETT \to ET) \to ETT \to ETT
+          \to  T\)}]
+        [{\((ET \to T) \to ET\)}
+          [{\(\mathbf{Raise}_{S}: (E \to ET) \to (ET \to T) \to ET\)}]
+          [{loves: \(E \to ET\)}]
+        ]
+      ]
+        [{everybody: \(ET \to T\)}]
+      ]
+    ]
+  \end{forest}
+\end{exe}
+#+end_export
+
+#+name: complex-der
+#+begin_exe
+\ex \(\mathbf{Raise}_S(\mathbf{love}) = \lambda y\,.\,\lambda Q\,.\,Q(\lambda x\,.\,\mathbf{love}(y)(x))\)
+\ex \(\mathbf{Raise}_{O}(\mathbf{Raise}_S(\mathbf{love})) = \lambda Q'\,.\,\lambda Q\,.\,Q'(\lambda y\,.\,Q(\lambda x\,.\,\mathbf{love}(y)(x)))\)
+\ex \(\mathbf{Raise}_{O}(\mathbf{Raise}_S(\mathbf{love}))(\mathbf{everybody}) = \lambda Q\,.\,\mathbf{everybody}(\lambda y\,.\,Q(\lambda x\,.\,\mathbf{love}(y)(x)))\)
+\ex \(\mathbf{Raise}_{O}(\mathbf{Raise}_S(\mathbf{love}))(\mathbf{everybody})(\mathbf{someone}) = \mathbf{everybody}(\lambda y\,.\,\mathbf{someone}(\lambda x\,.\,\mathbf{love}(y)(x)))\)
+#+end_exe
+
